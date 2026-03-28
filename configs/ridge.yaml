@@ -1,0 +1,17 @@
+# ridge.yaml — Ridge Regression baseline hyperparameters
+
+model:
+  name: ridge
+  version: 1
+
+params:
+  alpha: 1.0
+  fit_intercept: true
+  max_iter: 1000
+
+optuna:
+  n_trials: 20
+  direction: minimize
+  metric: rmse
+  search_space:
+    alpha: [0.001, 100.0]

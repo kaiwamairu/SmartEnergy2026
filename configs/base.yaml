@@ -1,0 +1,30 @@
+# base.yaml — Global configuration for Smart Home Energy Predictor 2026
+# ค่าพื้นฐานที่ใช้ร่วมกันทุก algorithm
+
+project:
+  name: smart-energy-optimizer-2026
+  version: "1.0"
+  seed: 42
+
+data:
+  base_path: /content/drive/MyDrive/SmartEnergy2026  # เปลี่ยนตาม Google Drive
+  raw_file: data/household_power_consumption.csv
+  processed_file: data/processed_hourly.csv
+  target_column: Global_active_power
+  resample_period: H  # Hourly resampling
+  test_size: 0.2
+  val_size: 0.1
+
+features:
+  window_size: 24       # จำนวนชั่วโมงย้อนหลังที่ใช้เป็น features
+  horizon: 1            # ทำนายล่วงหน้ากี่ชั่วโมง
+  lag_features: [1, 2, 3, 6, 12, 24]
+  rolling_windows: [3, 6, 12, 24]
+
+mlflow:
+  tracking_uri: sqlite:///runs/mlruns.db  # override ด้วย MLFLOW_TRACKING_URI env var
+  experiment_name: smart-energy-optimizer-2026
+  artifact_location: ./runs/artifacts
+
+baseline:
+  rmse_threshold: 0.15  # โมเดลต้องต่ำกว่านี้เพื่อ register เข้า Production

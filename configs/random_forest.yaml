@@ -1,0 +1,24 @@
+# random_forest.yaml — Random Forest hyperparameters
+
+model:
+  name: random_forest
+  version: 1
+
+params:
+  n_estimators: 200
+  max_depth: 15
+  min_samples_split: 5
+  min_samples_leaf: 2
+  max_features: sqrt
+  n_jobs: -1
+  random_state: 42
+
+optuna:
+  n_trials: 30
+  direction: minimize
+  metric: rmse
+  search_space:
+    n_estimators: [50, 300]
+    max_depth: [5, 30]
+    min_samples_split: [2, 20]
+    min_samples_leaf: [1, 10]

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+*.env
+
+# Data & Models (ใช้ DVC แทน Git)
+data/*.csv
+data/*.txt
+data/*.zip
+model_registry/
+runs/mlruns.db
+runs/artifacts/
+runs/*.db
+
+# Notebooks outputs
+notebooks/.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
