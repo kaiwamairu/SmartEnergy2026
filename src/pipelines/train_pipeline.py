@@ -102,7 +102,8 @@ def build_model(algo: str, params: dict, seed: int):
         sklearn-compatible model
     """
     if algo == "xgboost":
-        p = {k: v for k, v in params.items() if k not in ("early_stopping_rounds",)}
+        # XGBoost 2.0+: early_stopping_rounds อยู่ใน constructor ไม่ใช่ fit()
+        p = {k: v for k, v in params.items() if k != "verbosity"}
         return XGBRegressor(**p, random_state=seed, n_jobs=-1)
     elif algo == "random_forest":
         p = {k: v for k, v in params.items() if k != "random_state"}
@@ -197,11 +198,10 @@ def run_training(
 
         print(f"[INFO] เริ่มเทรน {model_name}...")
         if model_name == "xgboost":
-            es_rounds = cfg["params"].get("early_stopping_rounds", 30)
+            # XGBoost 2.0+: ส่ง eval_set ใน fit() เพื่อให้ early stopping ทำงาน
             model.fit(
                 X_train_s, y_train,
                 eval_set=[(X_val_s, y_val)],
-                early_stopping_rounds=es_rounds,
                 verbose=50,
             )
         else:
