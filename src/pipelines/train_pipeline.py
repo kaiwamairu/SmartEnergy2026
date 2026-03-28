@@ -105,7 +105,8 @@ def build_model(algo: str, params: dict, seed: int):
         p = {k: v for k, v in params.items() if k not in ("early_stopping_rounds",)}
         return XGBRegressor(**p, random_state=seed, n_jobs=-1)
     elif algo == "random_forest":
-        return RandomForestRegressor(**params, random_state=seed)
+        p = {k: v for k, v in params.items() if k != "random_state"}
+        return RandomForestRegressor(**p, random_state=seed)
     elif algo == "ridge":
         return Ridge(**params)
     else:
